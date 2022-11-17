@@ -35,7 +35,7 @@ function putStickerOn(){
   sticker.style.transform = `rotate(${rotation}deg)`;
   sticker.style.left = widthPlace + 'px';
   sticker.style.top = heightPlace + 'px';
-  sticker.src = `/Sticker${stickerVariant}.png`;
+  sticker.src = `./Sticker${stickerVariant}.png`;
   document.body.appendChild(sticker);
 }
 
