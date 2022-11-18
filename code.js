@@ -22,19 +22,22 @@ const client = new tmi.Client({
 let square = document.getElementById('square');
 let size = 100;
 
-let stickers = 2;
+let stickers = 3;
 
 function putStickerOn(){
   let sticker = document.createElement('img');
   let widthPlace = getRandomInt(w - size);
-  if (widthPlace <= size) widthPlace = widthPlace + size;
+  //if (widthPlace <= size) widthPlace = widthPlace + size;
   let heightPlace = getRandomInt(h - size);
-  if (heightPlace <= size) heightPlace = heightPlace + size;
+  //if (heightPlace <= size) heightPlace = heightPlace + size;
   let rotation = getRandomInt(360);
   let stickerVariant = getRandomInt(stickers);
-  sticker.style.transform = `rotate(${rotation}deg)`;
+  let resize = getRandomInt(30) + (size - 20); 
+  //sticker.style.transform = `rotate(${rotation}deg)`;
+  sticker.style.setProperty('--spin', rotation + 'deg');
   sticker.style.left = widthPlace + 'px';
   sticker.style.top = heightPlace + 'px';
+  sticker.style.width = resize + 'px';
   sticker.src = `./Sticker${stickerVariant}.png`;
   document.body.appendChild(sticker);
 }

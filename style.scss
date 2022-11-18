@@ -1,3 +1,22 @@
+@keyframes action-pop {
+  0% {
+    transform: scaleX(1) scaleY(1) rotate(var(--spin));
+  }
+  20%,
+  45% {
+    transform: scaleX(1.35) scaleY(.1) rotate(var(--spin));
+  }
+  65% {
+    transform: scaleX(.80) scaleY(1.5) rotate(var(--spin));
+  }
+  80% {
+    transform: scaleX(.60) scaleY(.85) rotate(var(--spin));
+  }
+  100% {
+    transform: scaleX(1) scaleY(1) rotate(var(--spin));
+  }
+}
+
 body {
   width: 100vw;
   height: 100vh;
@@ -7,6 +26,9 @@ body {
 }
 
 img {
+  --spin: 8deg;
   width: 100px;
   position: absolute;
+  animation: action-pop 0.45s cubic-bezier(.4,0,.2,1) forwards;
 }
+
