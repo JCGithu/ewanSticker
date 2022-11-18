@@ -1,6 +1,6 @@
 
-let wRatio = 0.10;
-let hRatio = 0.16;
+let wRatio = 0.09;
+let hRatio = 0.12;
 
 let size = 100;
 
@@ -38,42 +38,58 @@ let square = document.getElementById('square');
 let flip = true;
 
 // FUNCTIONS
-function putStickerOn(){
+function putStickerOn(settings){
   let sticker = document.createElement('img');
-  let widthPlace = getRandomInt(w - size);
-  //if (widthPlace <= size) widthPlace = widthPlace + size;
-  let heightPlace = getRandomInt(h - size);
 
+  console.log(settings);
+  
+  // PLACEMENT
+  let widthPlace = getRandomInt(w);
+  let heightPlace = getRandomInt(h);
+  if (!settings.shiny) {
+    widthPlace = widthPlace - (size/2);
+    heightPlace = heightPlace - (size/2);
+  }
   if (heightPlace >= hPercent && heightPlace <= h - hPercent && widthPlace >= wPercent && widthPlace <= w - wPercent) {
     console.log(heightPlace, widthPlace);
     let whichWay = getRandomInt(2);
     if (flip) {
       heightPlace = getRandomInt(hPercent);
-      if (whichWay) heightPlace = heightPlace + (h-(hPercent+size));
+      if (whichWay) heightPlace = heightPlace + (h - hPercent - (size/2));
     } else {
       widthPlace = getRandomInt(wPercent)
-      if (whichWay) widthPlace = widthPlace + (w - (wPercent+size));
+      if (whichWay) widthPlace = widthPlace + (w - wPercent  - (size/2));
     }
     flip = !flip;
   }
 
-  //if (heightPlace <= size) heightPlace = heightPlace + size;
+  //RANDOM
   let rotation = getRandomInt(360);
   let stickerVariant = getRandomInt(stickers);
   let resize = getRandomInt(30) + (size - 20); 
-  //sticker.style.transform = `rotate(${rotation}deg)`;
+
+  //SETTINGS
   sticker.style.setProperty('--spin', rotation + 'deg');
   sticker.style.left = widthPlace + 'px';
   sticker.style.top = heightPlace + 'px';
   sticker.style.width = resize + 'px';
+  sticker.style.zIndex = 1;
   sticker.src = `./Sticker${stickerVariant}.png`;
+  if (settings.shiny){
+    sticker.style.zIndex = 10;
+    sticker.style.filter = "brightness(1.5) contrast(1.5) drop-shadow(0 0 0.5em gold)";
+  }
   document.body.appendChild(sticker);
-  setTimeout(()=>{
-    sticker.animate([{opacity:1},{opacity:0}], {duration:9000, fill:'forwards'})
-  }, 50000)
-  setTimeout(()=>{
-    document.body.removeChild(sticker)
-  }, 60000)
+
+  //FADEOUT
+  if (!settings.shiny){
+    setTimeout(()=>{
+      sticker.animate([{opacity:1},{opacity:0}], {duration:9000, fill:'forwards'})
+    }, 50000)
+    setTimeout(()=>{
+      document.body.removeChild(sticker)
+    }, 60000)
+  }
 }
 
 //TMI.js TRIGGER
@@ -86,4 +102,11 @@ client.on('message', (channel, tags, message, self) => {
   }
 });
 
-if (urlParams.get('demo')) setInterval(putStickerOn, 1500);
+if (urlParams.get('demo')) {
+  
+  setInterval(()=>{
+    let shinyMaybe = getRandomInt(4);
+    shinyMaybe = !shinyMaybe;
+    putStickerOn({shiny:shinyMaybe})
+  }, 1500);
+};
