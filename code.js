@@ -86,4 +86,4 @@ client.on('message', (channel, tags, message, self) => {
   }
 });
 
-if (urlParams.get('demo')) setInterval(putStickerOn, 500);
+if (urlParams.get('demo')) setInterval(putStickerOn, 1500);
