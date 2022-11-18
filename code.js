@@ -96,14 +96,12 @@ function putStickerOn(settings){
 client.on("connected", () => console.log('Reading from Twitch! ✅'));
 client.connect();
 client.on('message', (channel, tags, message, self) => {
-  putStickerOn();
-  if (tags['custom-reward-id'] === 'test'){
-
+  if (tags['custom-reward-id'] === '697b3a57-f063-4125-a453-d44f08ecab4a'){
+    putStickerOn({shiny: false, tags: tags});
   }
 });
 
 if (urlParams.get('demo')) {
-  
   setInterval(()=>{
     let shinyMaybe = getRandomInt(4);
     shinyMaybe = !shinyMaybe;
