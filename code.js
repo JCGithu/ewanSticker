@@ -40,6 +40,12 @@ function putStickerOn(){
   sticker.style.width = resize + 'px';
   sticker.src = `./Sticker${stickerVariant}.png`;
   document.body.appendChild(sticker);
+  setTimeout(()=>{
+    sticker.animate([{opacity:1},{opacity:0}], {duration:9000, fill:'forwards'})
+  }, 50000)
+  setTimeout(()=>{
+    document.body.removeChild(sticker)
+  }, 60000)
 }
 
 client.on("connected", () => console.log('Reading from Twitch! ✅'));
