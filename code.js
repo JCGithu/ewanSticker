@@ -1,5 +1,6 @@
 
-let ratio = 0.185;
+let wRatio = 0.10;
+let hRatio = 0.16;
 
 let size = 100;
 
@@ -8,8 +9,8 @@ const urlParams = new URLSearchParams(window.location.search);
 // WINDOW SETTINGS
 let h = window.innerHeight;
 let w = window.innerWidth;
-let wPercent = w * ratio;
-let hPercent = h * ratio;
+let wPercent = w * wRatio;
+let hPercent = h * hRatio;
 
 console.log(w,h);
 
@@ -44,9 +45,15 @@ function putStickerOn(){
   let heightPlace = getRandomInt(h - size);
 
   if (heightPlace >= hPercent && heightPlace <= h - hPercent && widthPlace >= wPercent && widthPlace <= w - wPercent) {
-    console.log('Middle!');
-    heightPlace = getRandomInt(200);
-    if (flip) heightPlace = heightPlace + 680;
+    console.log(heightPlace, widthPlace);
+    let whichWay = getRandomInt(2);
+    if (flip) {
+      heightPlace = getRandomInt(hPercent);
+      if (whichWay) heightPlace = heightPlace + (h-(hPercent+size));
+    } else {
+      widthPlace = getRandomInt(wPercent)
+      if (whichWay) widthPlace = widthPlace + (w - (wPercent+size));
+    }
     flip = !flip;
   }
 
@@ -79,4 +86,4 @@ client.on('message', (channel, tags, message, self) => {
   }
 });
 
-if (urlParams.get('demo')) setInterval(putStickerOn, 1500);
+if (urlParams.get('demo')) setInterval(putStickerOn, 500);
