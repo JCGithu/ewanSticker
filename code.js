@@ -5,6 +5,9 @@ let hRatio = 0.12;
 let size = 100;
 
 const urlParams = new URLSearchParams(window.location.search);
+let limit = 1000;
+if (urlParams.get('limit')) limit = parseInt(urlParams.get('limit'));
+let stickerCount = 0;
 
 // WINDOW SETTINGS
 let h = window.innerHeight;
@@ -40,8 +43,6 @@ let flip = true;
 // FUNCTIONS
 function putStickerOn(settings){
   let sticker = document.createElement('img');
-
-  console.log(settings);
   
   // PLACEMENT
   let widthPlace = getRandomInt(w);
@@ -51,7 +52,6 @@ function putStickerOn(settings){
     heightPlace = heightPlace - (size/2);
   }
   if (heightPlace >= hPercent && heightPlace <= h - hPercent && widthPlace >= wPercent && widthPlace <= w - wPercent) {
-    console.log(heightPlace, widthPlace);
     let whichWay = getRandomInt(2);
     if (flip) {
       heightPlace = getRandomInt(hPercent);
@@ -80,15 +80,11 @@ function putStickerOn(settings){
     sticker.style.filter = "brightness(1.5) contrast(1.5) drop-shadow(0 0 0.5em gold)";
   }
   document.body.appendChild(sticker);
-
-  //FADEOUT
-  if (!settings.shiny){
-    setTimeout(()=>{
-      sticker.animate([{opacity:1},{opacity:0}], {duration:9000, fill:'forwards'})
-    }, 50000)
-    setTimeout(()=>{
-      document.body.removeChild(sticker)
-    }, 60000)
+  stickerCount++;
+  console.log(stickerCount)
+  if (stickerCount > limit){
+    let StickList = document.body.getElementsByTagName('img');
+    document.body.removeChild(StickList[0]);
   }
 }
 
