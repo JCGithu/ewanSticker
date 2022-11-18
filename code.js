@@ -1,34 +1,55 @@
-let body = document.body;
 
+let ratio = 0.185;
+
+let size = 100;
+
+const urlParams = new URLSearchParams(window.location.search);
+
+// WINDOW SETTINGS
 let h = window.innerHeight;
 let w = window.innerWidth;
+let wPercent = w * ratio;
+let hPercent = h * ratio;
 
 console.log(w,h);
 
 window.addEventListener('resize', () =>{
   h = window.innerHeight;
   w = window.innerWidth;
+  wPercent = w * ratio;
+  hPercent = h * ratio;
   console.log(w,h);
+  document.body.innerHTML = '';
 })
 
+//FUNCTION TOOLS
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
+//TMI.js
 let channels = ['letsbrock'];
+if (urlParams.get('channel')) channels = [urlParams.get('channel')];
 const client = new tmi.Client({
   channels: channels
 });
 let square = document.getElementById('square');
-let size = 100;
+let flip = true;
 
-let stickers = 3;
-
+// FUNCTIONS
 function putStickerOn(){
   let sticker = document.createElement('img');
   let widthPlace = getRandomInt(w - size);
   //if (widthPlace <= size) widthPlace = widthPlace + size;
   let heightPlace = getRandomInt(h - size);
+
+  if (heightPlace >= hPercent && heightPlace <= h - hPercent && widthPlace >= wPercent && widthPlace <= w - wPercent) {
+    console.log('Middle!');
+    heightPlace = getRandomInt(200);
+    if (flip) heightPlace = heightPlace + 680;
+    flip = !flip;
+  }
+
   //if (heightPlace <= size) heightPlace = heightPlace + size;
   let rotation = getRandomInt(360);
   let stickerVariant = getRandomInt(stickers);
@@ -48,6 +69,7 @@ function putStickerOn(){
   }, 60000)
 }
 
+//TMI.js TRIGGER
 client.on("connected", () => console.log('Reading from Twitch! ✅'));
 client.connect();
 client.on('message', (channel, tags, message, self) => {
@@ -56,3 +78,5 @@ client.on('message', (channel, tags, message, self) => {
 
   }
 });
+
+if (urlParams.get('demo')) setInterval(putStickerOn, 1500);
