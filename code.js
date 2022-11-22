@@ -87,7 +87,6 @@ function putStickerOn(settings){
 
   document.body.appendChild(sticker);
   stickerCount++;
-  console.log(stickerCount)
   if (stickerCount > limit){
     let StickList = document.body.getElementsByTagName('img');
     document.body.removeChild(StickList[0]);
@@ -111,9 +110,9 @@ client.on("connected", () => console.log('Reading from Twitch! ✅'));
 client.connect();
 client.on('message', (channel, tags, message, self) => {
   if (tags['custom-reward-id'] === '697b3a57-f063-4125-a453-d44f08ecab4a'){
+    console.log('Sticker redeemed by ' + tags.username);
     putStickerOn({shiny: false, tags: tags});
   }
-  console.log(tags);
 });
 
 if (urlParams.get('demo')) {
