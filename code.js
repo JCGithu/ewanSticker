@@ -85,11 +85,6 @@ function putStickerOn(settings){
     sticker.style.filter = "brightness(1.5) contrast(1.5) drop-shadow(0 0 0.5em gold)";
   }
 
-  //BIG 3 INDIVIDUALS
-  if (big3.includes(settings.tags.username) && !big3logged.includes(settings.tags.username)){
-    big3logged.push(settings.tags.username);
-    //sticker.src =  `./Sticker${settings.tags.username}.png`;
-  }
   document.body.appendChild(sticker);
   stickerCount++;
   console.log(stickerCount)
