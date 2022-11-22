@@ -3,6 +3,7 @@ let wRatio = 0.09;
 let hRatio = 0.12;
 
 let size = 190;
+let mins = 5;
 
 let big3 = ['elliotisacoolguy', 'lbx0', 'kickthepj', 'coollike'];
 let big3logged = []; 
@@ -10,6 +11,7 @@ let big3logged = [];
 const urlParams = new URLSearchParams(window.location.search);
 let limit = 1000;
 if (urlParams.get('limit')) limit = parseInt(urlParams.get('limit'));
+if (urlParams.get('mins')) limit = parseInt(urlParams.get('mins'));
 let stickerCount = 0;
 
 // WINDOW SETTINGS
@@ -102,11 +104,11 @@ function putStickerOn(settings){
   setTimeout(()=>{
     if (!document.body.contains(sticker)) return;
     sticker.animate([{opacity:1},{opacity:0}], {duration:9000, fill:'forwards'})
-  }, 50000)
+  }, (50000 * mins))
   setTimeout(()=>{
     if (!document.body.contains(sticker)) return;
     document.body.removeChild(sticker)
-  }, 60000)
+  }, (60000 * mins))
 }
 
 //TMI.js TRIGGER
