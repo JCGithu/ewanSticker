@@ -25,8 +25,8 @@ console.log(w,h);
 window.addEventListener('resize', () =>{
   h = window.innerHeight;
   w = window.innerWidth;
-  wPercent = w * ratio;
-  hPercent = h * ratio;
+  wPercent = w * wRatio;
+  hPercent = h * hRatio;
   console.log(w,h);
   document.body.innerHTML = '';
 })
