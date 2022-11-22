@@ -2,7 +2,10 @@
 let wRatio = 0.09;
 let hRatio = 0.12;
 
-let size = 100;
+let size = 190;
+
+let big3 = ['elliotisacoolguy', 'lbx0', 'kickthepj', 'coollike'];
+let big3logged = []; 
 
 const urlParams = new URLSearchParams(window.location.search);
 let limit = 1000;
@@ -79,6 +82,12 @@ function putStickerOn(settings){
     sticker.style.zIndex = 10;
     sticker.style.filter = "brightness(1.5) contrast(1.5) drop-shadow(0 0 0.5em gold)";
   }
+
+  //BIG 3 INDIVIDUALS
+  if (big3.includes(settings.tags.username) && !big3logged.includes(settings.tags.username)){
+    big3logged.push(settings.tags.username);
+    //sticker.src =  `./Sticker${settings.tags.username}.png`;
+  }
   document.body.appendChild(sticker);
   stickerCount++;
   console.log(stickerCount)
@@ -86,6 +95,18 @@ function putStickerOn(settings){
     let StickList = document.body.getElementsByTagName('img');
     document.body.removeChild(StickList[0]);
   }
+  //BIG 3 FINAL STICKER
+  if (big3logged.length === big3.length){
+    
+  }
+  setTimeout(()=>{
+    if (!document.body.contains(sticker)) return;
+    sticker.animate([{opacity:1},{opacity:0}], {duration:9000, fill:'forwards'})
+  }, 50000)
+  setTimeout(()=>{
+    if (!document.body.contains(sticker)) return;
+    document.body.removeChild(sticker)
+  }, 60000)
 }
 
 //TMI.js TRIGGER
@@ -95,6 +116,7 @@ client.on('message', (channel, tags, message, self) => {
   if (tags['custom-reward-id'] === '697b3a57-f063-4125-a453-d44f08ecab4a'){
     putStickerOn({shiny: false, tags: tags});
   }
+  console.log(tags);
 });
 
 if (urlParams.get('demo')) {
