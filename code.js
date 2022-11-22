@@ -126,6 +126,9 @@ client.on('message', (channel, tags, message, self) => {
     console.log('Sticker redeemed by ' + tags.username);
     putStickerOn({shiny: false, tags: tags});
   }
+  if (tags.badges.broadcaster && message === '!addSticker'){
+    putStickerOn({shiny: false, tags: tags});
+  }
 });
 
 if (urlParams.get('demo')) {
@@ -133,5 +136,5 @@ if (urlParams.get('demo')) {
     //let shinyMaybe = getRandomInt(4);
     //shinyMaybe = !shinyMaybe;
     putStickerOn({shiny:false, tags:{username:null}})
-  }, 1500);
+  }, 200);
 };
