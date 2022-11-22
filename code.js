@@ -11,7 +11,7 @@ let big3logged = [];
 const urlParams = new URLSearchParams(window.location.search);
 let limit = 1000;
 if (urlParams.get('limit')) limit = parseInt(urlParams.get('limit'));
-if (urlParams.get('mins')) limit = parseInt(urlParams.get('mins'));
+if (urlParams.get('mins')) mins = parseInt(urlParams.get('mins'));
 let stickerCount = 0;
 
 // WINDOW SETTINGS
