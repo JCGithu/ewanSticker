@@ -133,5 +133,5 @@ if (urlParams.get('demo')) {
     //let shinyMaybe = getRandomInt(4);
     //shinyMaybe = !shinyMaybe;
     putStickerOn({shiny:false, tags:{username:null}})
-  }, 100);
+  }, 1500);
 };
