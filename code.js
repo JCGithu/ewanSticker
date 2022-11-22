@@ -79,7 +79,7 @@ function putStickerOn(settings){
   sticker.style.top = heightPlace + 'px';
   sticker.style.width = resize + 'px';
   sticker.style.zIndex = 1;
-  sticker.src = `./Sticker${stickerVariant}.png`;
+  sticker.src = `./stickers/Sticker${stickerVariant}.png`;
   if (settings.shiny){
     sticker.style.zIndex = 10;
     sticker.style.filter = "brightness(1.5) contrast(1.5) drop-shadow(0 0 0.5em gold)";
@@ -117,8 +117,8 @@ client.on('message', (channel, tags, message, self) => {
 
 if (urlParams.get('demo')) {
   setInterval(()=>{
-    let shinyMaybe = getRandomInt(4);
-    shinyMaybe = !shinyMaybe;
-    putStickerOn({shiny:shinyMaybe})
+    //let shinyMaybe = getRandomInt(4);
+    //shinyMaybe = !shinyMaybe;
+    putStickerOn({shiny:false, tags:{username:null}})
   }, 1500);
 };
