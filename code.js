@@ -1,6 +1,6 @@
 
-let wRatio = 0.05;
-let hRatio = 0.065;
+let wRatio = 0.04;
+let hRatio = 0.055;
 
 let size = 190;
 let mins = 5;
@@ -53,17 +53,17 @@ function putStickerOn(settings){
   let widthPlace = getRandomInt(w);
   let heightPlace = getRandomInt(h);
   if (!settings.shiny) {
-    widthPlace = widthPlace - (size/2);
-    heightPlace = heightPlace - (size/2);
+    widthPlace = widthPlace - (size/1.5);
+    heightPlace = heightPlace - (size/1.5);
   }
   if (heightPlace >= hPercent && heightPlace <= h - hPercent && widthPlace >= wPercent && widthPlace <= w - wPercent) {
     let whichWay = getRandomInt(2);
     if (flip) {
       heightPlace = getRandomInt(hPercent);
-      if (whichWay) heightPlace = heightPlace + (h - hPercent - (size/2));
+      if (whichWay) heightPlace = heightPlace + (h - hPercent - (size/1.5));
     } else {
       widthPlace = getRandomInt(wPercent)
-      if (whichWay) widthPlace = widthPlace + (w - wPercent  - (size/2));
+      if (whichWay) widthPlace = widthPlace + (w - wPercent  - (size/1.5));
     }
     flip = !flip;
   }
@@ -120,5 +120,5 @@ if (urlParams.get('demo')) {
     //let shinyMaybe = getRandomInt(4);
     //shinyMaybe = !shinyMaybe;
     putStickerOn({shiny:false, tags:{username:null}})
-  }, 1500);
+  }, 1000);
 };
