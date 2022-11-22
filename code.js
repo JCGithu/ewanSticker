@@ -1,6 +1,6 @@
 
-let wRatio = 0.09;
-let hRatio = 0.12;
+let wRatio = 0.05;
+let hRatio = 0.065;
 
 let size = 190;
 let mins = 5;
@@ -71,7 +71,7 @@ function putStickerOn(settings){
   //RANDOM
   let rotation = getRandomInt(360);
   let stickerVariant = getRandomInt(stickers);
-  let resize = getRandomInt(30) + (size - 20); 
+  let resize = getRandomInt(60) + (size - 20); 
 
   //SETTINGS
   sticker.style.setProperty('--spin', rotation + 'deg');
