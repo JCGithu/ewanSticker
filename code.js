@@ -1,6 +1,6 @@
 
-let wRatio = 0.04;
-let hRatio = 0.055;
+let wRatio = 0.02;
+let hRatio = 0.03;
 
 let size = 190;
 let mins = 5;
@@ -14,6 +14,8 @@ if (urlParams.get('limit')) limit = parseInt(urlParams.get('limit'));
 if (urlParams.get('mins')) mins = parseInt(urlParams.get('mins'));
 let stickerCount = 0;
 
+
+
 // WINDOW SETTINGS
 let h = window.innerHeight;
 let w = window.innerWidth;
@@ -23,11 +25,13 @@ let hPercent = h * hRatio;
 console.log(w,h);
 
 window.addEventListener('resize', () =>{
+  let sizeWrite = document.getElementById('size');
   h = window.innerHeight;
   w = window.innerWidth;
   wPercent = w * wRatio;
   hPercent = h * hRatio;
   console.log(w,h);
+  sizeWrite.innerHTML = `${h} ${w}`;
   document.body.innerHTML = '';
 })
 
@@ -53,17 +57,26 @@ function putStickerOn(settings){
   let widthPlace = getRandomInt(w);
   let heightPlace = getRandomInt(h);
   if (!settings.shiny) {
-    widthPlace = widthPlace - (size/1.5);
-    heightPlace = heightPlace - (size/1.5);
+    widthPlace = widthPlace - size;
+    heightPlace = heightPlace - size;
   }
   if (heightPlace >= hPercent && heightPlace <= h - hPercent && widthPlace >= wPercent && widthPlace <= w - wPercent) {
     let whichWay = getRandomInt(2);
     if (flip) {
       heightPlace = getRandomInt(hPercent);
-      if (whichWay) heightPlace = heightPlace + (h - hPercent - (size/1.5));
+      if (whichWay) {
+        heightPlace = heightPlace + (h - hPercent - size);
+      } else {
+        //sticker.style.backgroundColor = 'red';
+        heightPlace = heightPlace - (size/4);
+      };
     } else {
-      widthPlace = getRandomInt(wPercent)
-      if (whichWay) widthPlace = widthPlace + (w - wPercent  - (size/1.5));
+      widthPlace = getRandomInt(wPercent);
+      if (whichWay) {
+        widthPlace = widthPlace + (w - wPercent  - size);
+      } else {
+        widthPlace = widthPlace - (size/4);
+      }
     }
     flip = !flip;
   }
@@ -120,5 +133,5 @@ if (urlParams.get('demo')) {
     //let shinyMaybe = getRandomInt(4);
     //shinyMaybe = !shinyMaybe;
     putStickerOn({shiny:false, tags:{username:null}})
-  }, 1000);
+  }, 100);
 };
