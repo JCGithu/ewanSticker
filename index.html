@@ -8,16 +8,37 @@
   <title>Ewan Sticker</title>
   <link rel="stylesheet" href="style.css">
   <script src="tmi.min.js"></script>
-  <script>let stickers = 10;</script>
   <script src="code.js"></script>
 </head>
 
 <body>
-  <!--   <p id="size"></p>
-  <div id="one"></div>
+  <h1 id="update"></h1>
+  <!--   <div id="one"></div>
   <div id="two"></div>
   <div id="three"></div>
   <div id="four"></div> -->
+  <script>
+    var update = document.createElement('h1');
+    update.id = 'update';
+    update.innerText = 'NEW STICKER ADDED';
+    document.body.appendChild(update);
+
+    function stickerChecker() {
+      let stickerCheck = UrlExists(`./stickers/Sticker${stickers}.png`);
+      if (stickerCheck) {
+        console.log(`Sticker${stickers} found!`);
+        stickers++;
+        //update.style.bottom = '0%';
+      } else {
+        //update.style.bottom = '-7rem';
+      }
+    }
+
+    stickerChecker();
+    setInterval(() => {
+      stickerChecker();
+    }, 5000);
+  </script>
 </body>
 
 </html>

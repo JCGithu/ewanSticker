@@ -65,3 +65,16 @@ p{
   position: absolute;
   left: 0;
 }
+
+#update{
+  margin: 0;
+  padding: 1em;
+  position: absolute;
+  z-index: 50;
+  background-color: rgb(189, 72, 92);
+  color: white;
+  bottom: -100%;
+  left: 1.5rem;
+  border-radius: 1rem 1rem 0 0;
+  transition: 2s cubic-bezier(0.075, 0.82, 0.165, 1) all;
+}

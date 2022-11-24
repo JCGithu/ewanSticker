@@ -1,20 +1,31 @@
+// VARIABLES FOR YOU!
 
-let wRatio = 0.02;
-let hRatio = 0.03;
+// GUTTER SIZE, this is the percentage of the sides the stickers can take up. So currently 5% width either side.
+let wRatio = 0.05;
+let hRatio = 0.12;
 
-let size = 190;
-let mins = 5;
+//Number of Stickers currently. Don't need to update this too much, it'll search for new ones on loading.
+let stickers = 10;
+
+// The max size of stickers, and the amount they can shrink by (applied randomly).
+let size = 200;
+let sizeVariance = 50;
+
+// Sticker limit and the time before they fade in mins.
+let mins = 10;
+let limit = 1000;
+
+// All the rest can be left for now
 
 let big3 = ['elliotisacoolguy', 'lbx0', 'kickthepj', 'coollike'];
 let big3logged = []; 
 
 const urlParams = new URLSearchParams(window.location.search);
-let limit = 1000;
 if (urlParams.get('limit')) limit = parseInt(urlParams.get('limit'));
 if (urlParams.get('mins')) mins = parseInt(urlParams.get('mins'));
 let stickerCount = 0;
 
-
+let leftPlace = 0, rightPlace = 0, topPlace = 0, bottomPlace = 0, noPlace = 0;
 
 // WINDOW SETTINGS
 let h = window.innerHeight;
@@ -25,19 +36,21 @@ let hPercent = h * hRatio;
 console.log(w,h);
 
 window.addEventListener('resize', () =>{
-  let sizeWrite = document.getElementById('size');
   h = window.innerHeight;
   w = window.innerWidth;
   wPercent = w * wRatio;
   hPercent = h * hRatio;
   console.log(w,h);
-  sizeWrite.innerHTML = `${h} ${w}`;
   document.body.innerHTML = '';
 })
 
 //FUNCTION TOOLS
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
+}
+
+function inRange(x, min, max){
+  return x >= min && x <= max;
 }
 
 //TMI.js
@@ -47,44 +60,60 @@ const client = new tmi.Client({
   channels: channels
 });
 let square = document.getElementById('square');
-let flip = true;
 
 // FUNCTIONS
 function putStickerOn(settings){
   let sticker = document.createElement('img');
   
   // PLACEMENT
-  let widthPlace = getRandomInt(w);
-  let heightPlace = getRandomInt(h);
-  if (!settings.shiny) {
-    widthPlace = widthPlace - size;
-    heightPlace = heightPlace - size;
-  }
-  if (heightPlace >= hPercent && heightPlace <= h - hPercent && widthPlace >= wPercent && widthPlace <= w - wPercent) {
-    let whichWay = getRandomInt(2);
+  let resize = getRandomInt(sizeVariance) + (size - sizeVariance); 
+  let imgCenter = resize / 2;
+
+  let widthPlace = getRandomInt(w) - imgCenter;
+  let heightPlace = getRandomInt(h) - imgCenter;
+
+  let minH = hPercent - imgCenter;
+  let maxH = h - hPercent - imgCenter;
+  let minW = wPercent - imgCenter;
+  let maxW = w - wPercent - imgCenter;
+
+  console.log(minH);
+
+  if (inRange(heightPlace, minH, maxH) && inRange(widthPlace, minW, maxW) ) {
+    let flip = getRandomInt(2);
+    let pickDirection = getRandomInt(2);
+
     if (flip) {
-      heightPlace = getRandomInt(hPercent);
-      if (whichWay) {
-        heightPlace = heightPlace + (h - hPercent - size);
+      // MOVE VERTICALLY
+      let withinHrange = getRandomInt(hPercent);
+      if (pickDirection) {
+        //BOTTOM
+        bottomPlace++
+        heightPlace = h - withinHrange - imgCenter;
       } else {
-        //sticker.style.backgroundColor = 'red';
-        heightPlace = heightPlace - (size/4);
+        //TOP
+        topPlace++
+        heightPlace = withinHrange - imgCenter;
       };
     } else {
-      widthPlace = getRandomInt(wPercent);
-      if (whichWay) {
-        widthPlace = widthPlace + (w - wPercent  - size);
+      // MOVE HORIZONTALLY
+      let withinWRange = getRandomInt(wPercent);
+      if (pickDirection) {
+        // RIGHT
+        rightPlace++
+        widthPlace = w - withinWRange - imgCenter;
       } else {
-        widthPlace = widthPlace - (size/4);
+        //LEFT
+        leftPlace++
+        widthPlace = withinWRange - imgCenter;
       }
     }
-    flip = !flip;
   }
 
   //RANDOM
   let rotation = getRandomInt(360);
   let stickerVariant = getRandomInt(stickers);
-  let resize = getRandomInt(60) + (size - 20); 
+
 
   //SETTINGS
   sticker.style.setProperty('--spin', rotation + 'deg');
@@ -100,6 +129,7 @@ function putStickerOn(settings){
 
   document.body.appendChild(sticker);
   stickerCount++;
+  console.log(leftPlace, rightPlace, topPlace, bottomPlace, noPlace);
   if (stickerCount > limit){
     let StickList = document.body.getElementsByTagName('img');
     document.body.removeChild(StickList[0]);
@@ -110,8 +140,8 @@ function putStickerOn(settings){
   }
   setTimeout(()=>{
     if (!document.body.contains(sticker)) return;
-    sticker.animate([{opacity:1},{opacity:0}], {duration:9000, fill:'forwards'})
-  }, (50000 * mins))
+    sticker.animate([{opacity:1},{opacity:0}], {duration:3000, fill:'forwards'})
+  }, (55000 * mins))
   setTimeout(()=>{
     if (!document.body.contains(sticker)) return;
     document.body.removeChild(sticker)
@@ -135,6 +165,18 @@ if (urlParams.get('demo')) {
   setInterval(()=>{
     //let shinyMaybe = getRandomInt(4);
     //shinyMaybe = !shinyMaybe;
-    putStickerOn({shiny:false, tags:{username:null}})
+    putStickerOn({shiny:false, tags:{username:null}});
   }, 200);
 };
+
+// CHECK FOR NEW STICKERS
+var url = window.location.href;
+function UrlExists(url) {
+  var http = new XMLHttpRequest();
+  http.open('HEAD', url, false);
+  http.send();
+  if (http.status != 404)
+    return true;
+  else
+    return false;
+}
