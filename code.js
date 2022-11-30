@@ -77,8 +77,6 @@ function putStickerOn(settings){
   let minW = wPercent - imgCenter;
   let maxW = w - wPercent - imgCenter;
 
-  console.log(minH);
-
   if (inRange(heightPlace, minH, maxH) && inRange(widthPlace, minW, maxW) ) {
     let flip = getRandomInt(2);
     let pickDirection = getRandomInt(2);
@@ -129,7 +127,6 @@ function putStickerOn(settings){
 
   document.body.appendChild(sticker);
   stickerCount++;
-  console.log(leftPlace, rightPlace, topPlace, bottomPlace, noPlace);
   if (stickerCount > limit){
     let StickList = document.body.getElementsByTagName('img');
     document.body.removeChild(StickList[0]);
@@ -154,10 +151,10 @@ client.connect();
 client.on('message', (channel, tags, message, self) => {
   if (tags['custom-reward-id'] === '697b3a57-f063-4125-a453-d44f08ecab4a'){
     console.log('Sticker redeemed by ' + tags.username);
-    putStickerOn({shiny: false, tags: tags});
+    //putStickerOn({shiny: false, tags: tags});
   }
-  if (tags.badges.broadcaster && message === '!addSticker'){
-    putStickerOn({shiny: false, tags: tags});
+  if (tags.badges.broadcaster || tags.badges.moderator ){
+    if (message === '!addSticker') putStickerOn({shiny: false, tags: tags});
   }
 });
 
@@ -167,6 +164,28 @@ if (urlParams.get('demo')) {
     //shinyMaybe = !shinyMaybe;
     putStickerOn({shiny:false, tags:{username:null}});
   }, 200);
+};
+
+const StreamerBot = new WebSocket("ws://localhost:8080/");
+StreamerBot.onopen = () => {
+  console.log("Connected to StreamerBot");
+  let Subscribe = {
+    request: "Subscribe",
+    events: {
+      Twitch: ["Follow", "Cheer", "Sub", "Resub", "GiftSub", "GiftBomb", "RewardRedemption"],
+    },
+    id: "123",
+  };
+  StreamerBot.send(JSON.stringify(Subscribe));
+  StreamerBot.onmessage = async (data) => {
+    data = JSON.parse(data.data).data;
+    console.log(data);
+    if (!data) return;
+    if (data.rewardId === "697b3a57-f063-4125-a453-d44f08ecab4a") {
+      console.log("REDEEMED!");
+      putStickerOn({shiny:false, tags:{}});
+    }
+  };
 };
 
 // CHECK FOR NEW STICKERS
