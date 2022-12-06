@@ -120,6 +120,7 @@ function putStickerOn(settings){
   sticker.style.width = resize + 'px';
   sticker.style.zIndex = 1;
   sticker.src = `./stickers/Sticker${stickerVariant}.png`;
+  if (settings.sticker) sticker.src = `./stickers/Sticker${settings.sticker}.png`;
   if (settings.shiny){
     sticker.style.zIndex = 10;
     sticker.style.filter = "brightness(1.5) contrast(1.5) drop-shadow(0 0 0.5em gold)";
