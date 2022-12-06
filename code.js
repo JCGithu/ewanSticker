@@ -166,7 +166,9 @@ if (urlParams.get('demo')) {
   }, 200);
 };
 
-const StreamerBot = new WebSocket("ws://localhost:8080/");
+let port = 8080
+if (urlParams.get('port')) port = parseInt(urlParams.get('port'));
+const StreamerBot = new WebSocket(`ws://localhost:${port}/`);
 StreamerBot.onopen = () => {
   console.log("Connected to StreamerBot");
   let Subscribe = {
@@ -177,16 +179,22 @@ StreamerBot.onopen = () => {
     id: "123",
   };
   StreamerBot.send(JSON.stringify(Subscribe));
-  StreamerBot.onmessage = async (data) => {
-    data = JSON.parse(data.data).data;
-    console.log(data);
-    if (!data) return;
+  StreamerBot.onmessage = async (message) => {
+    data = JSON.parse(message.data);
+    if (data.data) {
+      data = data.data;
+      console.log(data);
+    } else {
+      console.log(data);
+      return
+    }
     if (data.rewardId === "697b3a57-f063-4125-a453-d44f08ecab4a") {
       console.log("REDEEMED!");
       putStickerOn({shiny:false, tags:{}});
     }
   };
 };
+StreamerBot.onerror((er)=>{console.log(er)});
 
 // CHECK FOR NEW STICKERS
 var url = window.location.href;
