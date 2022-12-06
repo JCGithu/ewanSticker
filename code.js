@@ -12,7 +12,7 @@ let size = 200;
 let sizeVariance = 50;
 
 // Sticker limit and the time before they fade in mins.
-let mins = 10;
+let mins = 20;
 let limit = 1000;
 
 // All the rest can be left for now
