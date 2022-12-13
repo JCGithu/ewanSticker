@@ -7,38 +7,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ewan Sticker</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.min.js"></script>
   <script src="tmi.min.js"></script>
   <script src="code.js"></script>
 </head>
 
 <body>
-  <h1 id="update"></h1>
   <!--   <div id="one"></div>
   <div id="two"></div>
   <div id="three"></div>
   <div id="four"></div> -->
   <script>
-    var update = document.createElement('h1');
-    update.id = 'update';
-    update.innerText = 'NEW STICKER ADDED';
-    document.body.appendChild(update);
-
     function stickerChecker() {
       let stickerCheck = UrlExists(`./stickers/Sticker${stickers}.png`);
       if (stickerCheck) {
         console.log(`Sticker${stickers} found!`);
+        putStickerOn({ shiny: false, sticker: stickers });
+        putStickerOn({ shiny: false, sticker: stickers });
+        putStickerOn({ shiny: false, sticker: stickers });
         stickers++;
-        putStickerOn({ shiny: false, sticker: stickers });
-        putStickerOn({ shiny: false, sticker: stickers });
-        putStickerOn({ shiny: false, sticker: stickers });
-        //update.style.bottom = '0%';
       } else {
         console.log('No new stickers');
-        //update.style.bottom = '-7rem';
       }
     }
 
-    stickerChecker();
     setInterval(() => {
       stickerChecker();
     }, 5000);

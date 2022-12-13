@@ -5,7 +5,7 @@ let wRatio = 0.05;
 let hRatio = 0.12;
 
 //Number of Stickers currently. Don't need to update this too much, it'll search for new ones on loading.
-let stickers = 10;
+let stickers = 8;
 
 // The max size of stickers, and the amount they can shrink by (applied randomly).
 let size = 200;
@@ -63,7 +63,9 @@ let square = document.getElementById('square');
 
 // FUNCTIONS
 function putStickerOn(settings){
-  let sticker = document.createElement('img');
+  let sticker = document.createElement('div');
+  let stickerImg = document.createElement('img');
+  let stickerBack = document.createElement('img');
   
   // PLACEMENT
   let resize = getRandomInt(sizeVariance) + (size - sizeVariance); 
@@ -115,21 +117,28 @@ function putStickerOn(settings){
 
   //SETTINGS
   sticker.style.setProperty('--spin', rotation + 'deg');
+  sticker.style.setProperty('--size', resize + 'px');
   sticker.style.left = widthPlace + 'px';
   sticker.style.top = heightPlace + 'px';
-  sticker.style.width = resize + 'px';
   sticker.style.zIndex = 1;
-  sticker.src = `./stickers/Sticker${stickerVariant}.png`;
-  if (settings.sticker) sticker.src = `./stickers/Sticker${settings.sticker}.png`;
+  stickerImg.src = `./stickers/Sticker${stickerVariant}.png`;
+  if (settings.sticker) stickerImg.src = `./stickers/Sticker${settings.sticker}.png`;
   if (settings.shiny){
     sticker.style.zIndex = 10;
     sticker.style.filter = "brightness(1.5) contrast(1.5) drop-shadow(0 0 0.5em gold)";
   }
-
+  stickerBack.src = stickerImg.src;
+  sticker.className = 'sticker';
+  stickerImg.className = 'stickerImg';
+  stickerBack.className = 'stickerBack';
+  
+  sticker.appendChild(stickerBack);
+  sticker.appendChild(stickerImg);
   document.body.appendChild(sticker);
+
   stickerCount++;
   if (stickerCount > limit){
-    let StickList = document.body.getElementsByTagName('img');
+    let StickList = document.body.getElementsByTagName('div');
     document.body.removeChild(StickList[0]);
   }
   //BIG 3 FINAL STICKER
@@ -160,11 +169,14 @@ client.on('message', (channel, tags, message, self) => {
 });
 
 if (urlParams.get('demo')) {
+  console.log('Demo Running');
+  //document.body.style.backgroundColor = 'black !important';
+  
   setInterval(()=>{
     //let shinyMaybe = getRandomInt(4);
     //shinyMaybe = !shinyMaybe;
     putStickerOn({shiny:false, tags:{username:null}});
-  }, 200);
+  }, 2000);
 };
 
 let port = 8080
