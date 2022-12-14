@@ -146,6 +146,9 @@ function putStickerOn(settings){
     
   }
   setTimeout(()=>{
+    sticker.removeChild(stickerBack);
+  }, 3500)
+  setTimeout(()=>{
     if (!document.body.contains(sticker)) return;
     sticker.animate([{opacity:1},{opacity:0}], {duration:3000, fill:'forwards'})
   }, (55000 * mins))

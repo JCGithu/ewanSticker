@@ -64,6 +64,7 @@ body {
 .sticker {
   --spin: 8deg;
   width: var(--size);
+  height: var(--size);
   perspective: 20px;
   position: absolute;
   transform-style: preserve-3d;
@@ -75,83 +76,35 @@ body {
   position: absolute;
 }
 
+span {
+  background-color: red;
+  position: absolute;
+}
+
 #one {
   top: 172px;
-  height: 1px;
+  height: 2px;
   width: 100vw;
 }
 
 #two {
   bottom: 172px;
-  height: 1px;
+  height: 2px;
   width: 100vw;
 }
 
 #three {
   left: 172px;
-  width: 1px;
+  width: 2px;
   height: 100vh;
 }
 
 #four {
   right: 172px;
-  width: 1px;
+  width: 2px;
   height: 100vh;
 }
 
-@-webkit-keyframes stickBack {
-  0% {
-    -webkit-clip-path: circle(141.4% at 0 0);
-            clip-path: circle(141.4% at 0 0);
-    transform: rotate(0deg) scale(1.05);
-  }
-  70% {
-    transform: translateX(-5px) rotate(0deg);
-  }
-  100% {
-    -webkit-clip-path: circle(0% at 0 0);
-            clip-path: circle(0% at 0 0);
-    transform: translateX(0px);
-  }
-}
-
-@keyframes stickBack {
-  0% {
-    -webkit-clip-path: circle(141.4% at 0 0);
-            clip-path: circle(141.4% at 0 0);
-    transform: rotate(0deg) scale(1.05);
-  }
-  70% {
-    transform: translateX(-5px) rotate(0deg);
-  }
-  100% {
-    -webkit-clip-path: circle(0% at 0 0);
-            clip-path: circle(0% at 0 0);
-    transform: translateX(0px);
-  }
-}
-@-webkit-keyframes stickFront {
-  0% {
-    transform: translateX(-20px) rotateY(30deg) scaleX(1.5s);
-  }
-  70% {
-    transform: translateX(0px) rotateY(0deg) scaleX(1);
-  }
-  100% {
-    transform: translateX(0px);
-  }
-}
-@keyframes stickFront {
-  0% {
-    transform: translateX(-20px) rotateY(30deg) scaleX(1.5s);
-  }
-  70% {
-    transform: translateX(0px) rotateY(0deg) scaleX(1);
-  }
-  100% {
-    transform: translateX(0px);
-  }
-}
 @-webkit-keyframes wipe-in-right {
   from {
     -webkit-clip-path: inset(0 100% 0 0);
@@ -162,6 +115,7 @@ body {
             clip-path: inset(0 0 0 0);
   }
 }
+
 @keyframes wipe-in-right {
   from {
     -webkit-clip-path: inset(0 100% 0 0);
@@ -212,24 +166,24 @@ body {
             clip-path: inset(0 0 0 100%);
   }
 }
-@-webkit-keyframes test-animation {
+@-webkit-keyframes move-peel {
   from {
     right: 100%;
-    top: 50%;
+    top: 0%;
   }
   to {
     right: -100%;
-    top: -50%;
+    top: 0%;
   }
 }
-@keyframes test-animation {
+@keyframes move-peel {
   from {
     right: 100%;
-    top: 50%;
+    top: 0%;
   }
   to {
     right: -100%;
-    top: -50%;
+    top: 0%;
   }
 }
 @-webkit-keyframes opacityBeam {
@@ -258,8 +212,8 @@ body {
   filter: contrast(0.05) brightness(1.8) saturate(2.69);
   z-index: 2;
   transform: scaleX(-1);
-  -webkit-animation: 3s cubic-bezier(0.25, 1, 0.3, 1) wipe-out-right both, 3s cubic-bezier(0.25, 1, 0.3, 1) test-animation both, 3s cubic-bezier(0.25, 1, 0.3, 1) opacityBeam both;
-          animation: 3s cubic-bezier(0.25, 1, 0.3, 1) wipe-out-right both, 3s cubic-bezier(0.25, 1, 0.3, 1) test-animation both, 3s cubic-bezier(0.25, 1, 0.3, 1) opacityBeam both;
+  -webkit-animation: 3s cubic-bezier(0.25, 1, 0.3, 1) wipe-out-right both, 3s cubic-bezier(0.25, 1, 0.3, 1) move-peel both, 3s cubic-bezier(0.25, 1, 0.3, 1) opacityBeam both;
+          animation: 3s cubic-bezier(0.25, 1, 0.3, 1) wipe-out-right both, 3s cubic-bezier(0.25, 1, 0.3, 1) move-peel both, 3s cubic-bezier(0.25, 1, 0.3, 1) opacityBeam both;
 }
 
 .stickerImg {
