@@ -166,8 +166,18 @@ client.on('message', (channel, tags, message, self) => {
     console.log('Sticker redeemed by ' + tags.username);
     //putStickerOn({shiny: false, tags: tags});
   }
+  console.log(tags);
   if (tags.badges.broadcaster || tags.badges.moderator ){
     if (message === '!addSticker') putStickerOn({shiny: false, tags: tags});
+  }
+});
+client.on("cheer", (channel, tags, message, self) => {
+  let bits = parseInt(tags.bits);
+  console.log(bits);
+  if (bits >= 250){
+    for (let j = 0; j < 20; j++){
+      putStickerOn({shiny:false, tags:tags})
+    }
   }
 });
 
