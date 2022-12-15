@@ -5,7 +5,7 @@ let wRatio = 0.05;
 let hRatio = 0.12;
 
 //Number of Stickers currently. Don't need to update this too much, it'll search for new ones on loading.
-let stickers = 8;
+let stickers = 65;
 
 // The max size of stickers, and the amount they can shrink by (applied randomly).
 let size = 200;
@@ -166,7 +166,7 @@ client.connect();
 client.on('message', (channel, tags, message, self) => {
   if (tags['custom-reward-id'] === '697b3a57-f063-4125-a453-d44f08ecab4a'){
     console.log('Sticker redeemed by ' + tags.username);
-    //putStickerOn({shiny: false, tags: tags});
+    putStickerOn({shiny: false, tags: tags});
   }
   console.log(tags);
   if (tags.badges.broadcaster || tags.badges.moderator ){
