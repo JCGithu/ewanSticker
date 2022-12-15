@@ -65,11 +65,8 @@ body {
   --spin: 8deg;
   width: var(--size);
   height: var(--size);
-  perspective: 20px;
   position: absolute;
-  transform-style: preserve-3d;
-  perspective-origin: center;
-  rotate: z var(--spin);
+  transform: rotate(var(--spin));
 }
 .sticker img {
   width: var(--size);
