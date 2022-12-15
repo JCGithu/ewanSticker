@@ -88,11 +88,11 @@ function putStickerOn(settings){
       let withinHrange = getRandomInt(hPercent);
       if (pickDirection) {
         //BOTTOM
-        bottomPlace++
+        bottomPlace++;
         heightPlace = h - withinHrange - imgCenter;
       } else {
         //TOP
-        topPlace++
+        topPlace++;
         heightPlace = withinHrange - imgCenter;
       };
     } else {
@@ -100,11 +100,11 @@ function putStickerOn(settings){
       let withinWRange = getRandomInt(wPercent);
       if (pickDirection) {
         // RIGHT
-        rightPlace++
+        rightPlace++;
         widthPlace = w - withinWRange - imgCenter;
       } else {
         //LEFT
-        leftPlace++
+        leftPlace++;
         widthPlace = withinWRange - imgCenter;
       }
     }
@@ -147,15 +147,17 @@ function putStickerOn(settings){
   }
   setTimeout(()=>{
     sticker.removeChild(stickerBack);
-  }, 3500)
+  }, 3500);
+
   setTimeout(()=>{
     if (!document.body.contains(sticker)) return;
     sticker.animate([{opacity:1},{opacity:0}], {duration:3000, fill:'forwards'})
-  }, (55000 * mins))
+  }, (55000 * mins));
+
   setTimeout(()=>{
     if (!document.body.contains(sticker)) return;
     document.body.removeChild(sticker)
-  }, (60000 * mins))
+  }, (60000 * mins));
 }
 
 //TMI.js TRIGGER
@@ -192,7 +194,7 @@ if (urlParams.get('demo')) {
   }, 2000);
 };
 
-let port = 8080
+let port = 8080;
 if (urlParams.get('port')) port = parseInt(urlParams.get('port'));
 const StreamerBot = new WebSocket(`ws://localhost:${port}/`);
 StreamerBot.onopen = () => {
